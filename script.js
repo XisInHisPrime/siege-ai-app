@@ -228,17 +228,33 @@ async function analyzeStats() {
     const username = document.getElementById("gamertag").value;
     const platform = document.getElementById("platform").value;
 
-    const url = `https://r6statsapi.herokuapp.com/stats/${platform}/${username}`;
+    const results = document.getElementById("results");
+
+    results.innerHTML = "Loading stats...";
 
     try {
+
+        const url = `https://r6statsapi.herokuapp.com/stats/${platform}/${username}`;
+
         const response = await fetch(url);
         const data = await response.json();
 
-        document.getElementById("kdStat").innerText = data.player.kd;
-        document.getElementById("winRate").innerText = data.player.winrate + "%";
+        const kd = data.player.kd;
+        const winRate = data.player.winrate;
+
+        results.innerHTML = `
+            <h3>Player: ${username}</h3>
+            <p>KD: ${kd}</p>
+            <p>Win Rate: ${winRate}%</p>
+        `;
+
+        createChart(kd, winRate, 45);
 
     } catch (error) {
-        console.log("Error loading stats", error);
+
+        results.innerHTML = "Could not load stats.";
+        console.log(error);
+
     }
 }
 
