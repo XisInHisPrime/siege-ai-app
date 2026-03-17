@@ -237,6 +237,11 @@ async function analyzeStats() {
         const url = `https://r6statsapi.herokuapp.com/stats/${platform}/${username}`;
 
         const response = await fetch(url);
+
+        if (!response.ok) {
+  throw new Error("API request failed");
+}
+
         const data = await response.json();
 
         const kd = data.player.kd;
