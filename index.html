@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>SiegeMind AI</title>
-    <link rel="stylesheet" href="style.css">
+<title>SiegeMind AI</title>
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -26,9 +29,12 @@
 
 <br><br>
 
-<button onclick="analyzePlayer()">Analyze Stats</button>
+<button onclick="analyzeStats()">Analyze Stats</button>
 
 <div id="results" class="card"></div>
+
+<h3>Stat Overview</h3>
+<canvas id="statChart" width="400" height="200"></canvas>
 
 </div>
 

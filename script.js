@@ -1,5 +1,7 @@
 function analyzePlayer() {
 
+createChart(1.41, 57, 45);
+
 let gamertag = document.getElementById("gamertag").value;
 
 let kd = (Math.random() * 0.8 + 0.8).toFixed(2);
@@ -206,4 +208,71 @@ ${operatorStats.map(op => `
 
 <p><b>AI Coach:</b> ${coach}</p>
 `;
+}
+
+const ctx = document.getElementById('statChart');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['KD', 'Win Rate', 'Survival'],
+        datasets: [{
+            label: 'Player Stats',
+            data: [1.41, 57, 45],
+        }]
+    }
+});
+
+async function analyzeStats() {
+
+    const username = document.getElementById("gamertag").value;
+    const platform = document.getElementById("platform").value;
+
+    const url = `https://r6statsapi.herokuapp.com/stats/${platform}/${username}`;
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        document.getElementById("kdStat").innerText = data.player.kd;
+        document.getElementById("winRate").innerText = data.player.winrate + "%";
+
+    } catch (error) {
+        console.log("Error loading stats", error);
+    }
+}
+
+function createChart(kd, winRate, survival) {
+
+const ctx = document.getElementById('statChart');
+
+new Chart(ctx, {
+type: 'bar',
+data: {
+labels: ['KD', 'Win Rate', 'Survival'],
+datasets: [{
+label: 'Player Stats',
+data: [kd, winRate, survival]
+}]
+}
+});
+
+}
+
+function analyzePlayer() {
+
+    const gamertag = document.getElementById("gamertag").value;
+    const platform = document.getElementById("platform").value;
+
+    const results = document.getElementById("results");
+
+    results.innerHTML = `
+        <h3>Player: ${gamertag}</h3>
+        <p>Platform: ${platform}</p>
+        <p>KD: 1.41</p>
+        <p>Win Rate: 57%</p>
+        <p>Survival: 45%</p>
+    `;
+
+    createChart(1.41, 57, 45);
 }
